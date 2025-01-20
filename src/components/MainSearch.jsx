@@ -1,37 +1,45 @@
+// src/components/MainSearch.jsx
+
 import { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Job from './Job';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../redux/reducers/favouritesSlice';  
 
 const MainSearch = () => {
   const [query, setQuery] = useState('');
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  
+  const favourites = useSelector(state => state.favourites); 
+  const dispatch = useDispatch();  
 
   const baseEndpoint = 'https://strive-benchmark.herokuapp.com/api/jobs?search=';
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setQuery(e.target.value);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);  
-
     try {
       const response = await fetch(baseEndpoint + query + '&limit=20');
       if (response.ok) {
         const { data } = await response.json();
-        console.log('Jobs data:', data); 
         setJobs(data);
       } else {
         alert('Error fetching results');
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false); 
     }
+  };
+
+  const handleAddToFavorites = (job) => {
+    dispatch(addToFavorites(job)); 
+  };
+
+  const handleRemoveFromFavorites = (jobId) => {
+    dispatch(removeFromFavorites(jobId));  
   };
 
   return (
@@ -41,28 +49,31 @@ const MainSearch = () => {
           <h1 className="display-1">Remote Jobs Search</h1>
         </Col>
         <Col xs={10} className="mx-auto">
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className="d-flex">
             <Form.Control
               type="search"
               value={query}
               onChange={handleChange}
-              placeholder="type and press Enter"
+              placeholder="Search for remote jobs..."
+              className="me-2"
             />
+            <Button type="submit" variant="primary">Cerca</Button>
           </Form>
         </Col>
         <Col xs={10} className="mx-auto mb-5">
-          {loading ? (
-            <p>Loading...</p>  
-          ) : jobs.length > 0 ? (
-            jobs.map(jobData => <Job key={jobData._id} data={jobData} />)
+          {jobs.length > 0 ? (
+            jobs.map((jobData) => (
+              <Job
+                key={jobData._id}
+                data={jobData}
+                onAddToFavorites={handleAddToFavorites}
+                onRemoveFromFavorites={handleRemoveFromFavorites}
+                isFavourite={favourites.some(job => job._id === jobData._id)}  
+              />
+            ))
           ) : (
-            <p>No jobs found.</p> 
+            <p>No job listings available.</p>
           )}
-        </Col>
-        <Col xs={10} className="mx-auto mb-5">
-          <Link to="/favourites">
-            <Button variant="success">Go to Favourites</Button>
-          </Link>
         </Col>
       </Row>
     </Container>
@@ -70,4 +81,3 @@ const MainSearch = () => {
 };
 
 export default MainSearch;
-

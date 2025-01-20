@@ -7,12 +7,10 @@ import Favourites from './components/Favourites';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store/store';
-import Footer from './components/Footer';
-
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store}>  
       <BrowserRouter>
         <MyNavbar />
         <Routes>
@@ -20,11 +18,13 @@ function App() {
           <Route path="/:company" element={<CompanySearchResults />} />
           <Route path="/favourites" element={<Favourites />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
-      
     </Provider>
   );
 }
 
 export default App;
+
+
+
+
