@@ -2,6 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Job from './Job';
 
+
 const Favourites = () => {
   const favorites = useSelector((state) => state.favorites);  
 
