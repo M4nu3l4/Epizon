@@ -20,6 +20,7 @@ const Favourites = () => {
           )}
         </Col>
       </Row>
+     
     </Container>
   );
 };

@@ -20,9 +20,9 @@ function App() {
           <Route path="/:company" element={<CompanySearchResults />} />
           <Route path="/favourites" element={<Favourites />} />
         </Routes>
-        
+        <Footer />
       </BrowserRouter>
-      <Footer />
+      
     </Provider>
   );
 }
