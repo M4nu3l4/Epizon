@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <footer style={{ backgroundColor: '#2c3e50', color: '#ecf0f1', padding: '20px 0', marginTop: 'auto' }}>
+    <footer className="bg-dark text-white py-3">
       <Container>
         <Row>
           <Col md={4} className="text-center text-md-start mb-3 mb-md-0">
@@ -12,14 +12,14 @@ const Footer = () => {
           </Col>
           <Col md={4} className="text-center mb-3 mb-md-0">
             <h6>Link Utili</h6>
-            <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+            <ul className="list-unstyled">
               <li>
-                <a href="/" style={{ color: '#1abc9c', textDecoration: 'none' }}>
+                <a href="/" className="text-success text-decoration-none">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/favourites" style={{ color: '#1abc9c', textDecoration: 'none' }}>
+                <a href="/favourites" className="text-success text-decoration-none">
                   Preferiti
                 </a>
               </li>
@@ -31,10 +31,10 @@ const Footer = () => {
             <p>Telefono: +39 123 456 789</p>
           </Col>
         </Row>
-        <hr style={{ borderColor: '#7f8c8d' }} />
+        <hr className="border-light" />
         <Row>
           <Col className="text-center">
-            <p style={{ margin: 0 }}>
+            <p className="mb-0">
               &copy; {new Date().getFullYear()} Remote Jobs Search. Tutti i diritti riservati.
             </p>
           </Col>
@@ -45,4 +45,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
